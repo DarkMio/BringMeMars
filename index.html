@@ -4,63 +4,279 @@
     <title>Bring Me Mars | An Idle Game</title>
     <link rel="stylesheet" href="static/css/material.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="static/css/app.css">
     <script src="static/js/lib/material/material.js"></script>
+    <script src="static/js/lib/gauge/gauge.min.js"></script>
 </head>
 <body>
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
             mdl-layout--fixed-tabs">
-  <header class="mdl-layout__header">
-    <div class="mdl-layout__header-row">
-      <!-- Title -->
-      <span class="mdl-layout-title">Bring Me the Mars</span>
-    </div>
-    <!-- Tabs -->
-    <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-      <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Mission Overview</a>
-      <a href="#fixed-tab-2" class="mdl-layout__tab">Upgrades</a>
-      <a href="#fixed-tab-3" class="mdl-layout__tab">Lifetime Statistics</a>
-    </div>
-  </header>
-  <main class="mdl-layout__content">
-    <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
-      <div class="page-content"><!-- Your content goes here --></div>
-    </section>
-    <section class="mdl-layout__tab-panel" id="fixed-tab-2">
-      <div class="page-content"><!-- Your content goes here --></div>
-    </section>
-    <section class="mdl-layout__tab-panel" id="fixed-tab-3">
-      <div class="page-content">
-          <button id="demo-show-toast" class="mdl-button mdl-js-button mdl-button--raised" type="button">Show Toast</button>
-      </div>
-    </section>
-  </main>
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+            <!-- Title -->
+            <span class="mdl-layout-title">Bring Me the Mars</span>
+        </div>
+        <!-- Tabs -->
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+            <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Mission Overview</a>
+            <a href="#fixed-tab-2" class="mdl-layout__tab">Upgrades</a>
+            <a href="#fixed-tab-3" class="mdl-layout__tab">Lifetime Statistics</a>
+        </div>
+    </header>
+    <main class="mdl-layout__content mdl-color--grey-100">
+        <!-- Lets make a dashboard from here: -->
+        <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+            <div class="page-content">
+                <div class="mdl-grid dashboard">
+                    <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+                        <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop">
+                            <canvas id="gauge1"></canvas>
+                        </div>
+                        <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop">
+                            <canvas id="gauge2"></canvas>
+                        </div>
+                        <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop">
+                            <canvas id="gauge3"></canvas>
+                        </div>
+                        <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop">
+                            <canvas id="gauge4"></canvas>
+                        </div>
+                    </div>
+                    <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
+                        <div class="progress-pie-chart" data-percent="43">
+                            <div class="ppc-progress">
+                                <div class="ppc-progress-fill"></div>
+                            </div>
+                            <div class="ppc-percents">
+                                <div class="pcc-percents-wrapper">
+                                    <span class="ppc-span">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
+                        <div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
+                            <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
+                                <h2 class="mdl-card__title-text">Updates</h2>
+                            </div>
+                            <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                                Non dolore elit adipisicing ea reprehenderit consectetur culpa.
+                            </div>
+                            <div class="mdl-card__actions mdl-card--border">
+                                <a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect"
+                                   data-upgraded=",MaterialButton,MaterialRipple">Read More<span
+                                        class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></a>
+                            </div>
+                        </div>
+                        <div class="separator mdl-cell--1-col"></div>
+                        <div class="demo-options mdl-card mdl-color--deep-purple-500 mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--12-col-desktop">
+                            <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+                                <h3>View options</h3>
+                                <ul>
+                                    <li>
+                                        <label for="chkbox1"
+                                               class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded"
+                                               data-upgraded=",MaterialCheckbox,MaterialRipple">
+                                            <input type="checkbox" id="chkbox1" class="mdl-checkbox__input">
+                                            <span class="mdl-checkbox__label">Click per object</span>
+                                            <span class="mdl-checkbox__focus-helper"></span><span
+                                                class="mdl-checkbox__box-outline"><span
+                                                class="mdl-checkbox__tick-outline"></span></span><span
+                                                class="mdl-checkbox__ripple-container mdl-js-ripple-effect mdl-ripple--center"
+                                                data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></label>
+                                    </li>
+                                    <li>
+                                        <label for="chkbox2"
+                                               class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded"
+                                               data-upgraded=",MaterialCheckbox,MaterialRipple">
+                                            <input type="checkbox" id="chkbox2" class="mdl-checkbox__input">
+                                            <span class="mdl-checkbox__label">Views per object</span>
+                                            <span class="mdl-checkbox__focus-helper"></span><span
+                                                class="mdl-checkbox__box-outline"><span
+                                                class="mdl-checkbox__tick-outline"></span></span><span
+                                                class="mdl-checkbox__ripple-container mdl-js-ripple-effect mdl-ripple--center"
+                                                data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></label>
+                                    </li>
+                                    <li>
+                                        <label for="chkbox3"
+                                               class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded"
+                                               data-upgraded=",MaterialCheckbox,MaterialRipple">
+                                            <input type="checkbox" id="chkbox3" class="mdl-checkbox__input">
+                                            <span class="mdl-checkbox__label">Objects selected</span>
+                                            <span class="mdl-checkbox__focus-helper"></span><span
+                                                class="mdl-checkbox__box-outline"><span
+                                                class="mdl-checkbox__tick-outline"></span></span><span
+                                                class="mdl-checkbox__ripple-container mdl-js-ripple-effect mdl-ripple--center"
+                                                data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></label>
+                                    </li>
+                                    <li>
+                                        <label for="chkbox4"
+                                               class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded"
+                                               data-upgraded=",MaterialCheckbox,MaterialRipple">
+                                            <input type="checkbox" id="chkbox4" class="mdl-checkbox__input">
+                                            <span class="mdl-checkbox__label">Objects viewed</span>
+                                            <span class="mdl-checkbox__focus-helper"></span><span
+                                                class="mdl-checkbox__box-outline"><span
+                                                class="mdl-checkbox__tick-outline"></span></span><span
+                                                class="mdl-checkbox__ripple-container mdl-js-ripple-effect mdl-ripple--center"
+                                                data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></label>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="mdl-card__actions mdl-card--border">
+                                <a href="#"
+                                   class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--blue-grey-50"
+                                   data-upgraded=",MaterialButton,MaterialRipple">Change location<span
+                                        class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></a>
+                                <div class="mdl-layout-spacer"></div>
+                                <i class="material-icons">location_on</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="mdl-layout__tab-panel" id="fixed-tab-2">
+            <div class="page-content"><!-- Your content goes here --></div>
+        </section>
+        <section class="mdl-layout__tab-panel" id="fixed-tab-3">
+            <div class="page-content">
+                <div class="mdl-grid dashboard">
+                    <div class="mdl-cell--12-col mdl-typography--text-center">
+                        <button id="demo-show-toast" class="mdl-button mdl-js-button mdl-button--raised" type="button">
+                            Show Toast
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 </div>
 
 <div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
     <div class="mdl-snackbar__text"></div>
-<button class="mdl-snackbar__action" type="button">x</button>
-<script>
-(function() {
-  'use strict';
-  var snackbarContainer = document.querySelector('#demo-toast-example');
-  var showSnackbarButton = document.querySelector('#demo-show-toast');
-  var handler = function(event) {
-    showSnackbarButton.style.backgroundColor = '';
-  };
-  showSnackbarButton.addEventListener('click', function() {
-    'use strict';
-    showSnackbarButton.style.backgroundColor = '#' +
-        Math.floor(Math.random() * 0xFFFFFF).toString(16);
-    var data = {
-      message: 'Button color changed.',
-      timeout: 2000,
-      actionHandler: handler,
-      actionText: 'Undo'
-    };
-    snackbarContainer.MaterialSnackbar.showSnackbar(data);
-  });
-}());
-</script>
+    <button class="mdl-snackbar__action" type="button">x</button>
+
+    <svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1"
+         style="position: fixed; left: -1000px; height: -1000px;">
+        <defs>
+            <mask id="piemask" maskContentUnits="objectBoundingBox">
+                <circle cx="0.5" cy="0.5" r="0.49" fill="white"></circle>
+                <circle cx="0.5" cy="0.5" r="0.40" fill="black"></circle>
+            </mask>
+            <g id="piechart">
+                <circle cx="0.5" cy="0.5" r="0.5"></circle>
+                <path d="M 0.5 0.5 0.5 0 A 0.5 0.5 0 0 1 0.95 0.28 z" stroke="none"
+                      fill="rgba(255, 255, 255, 0.75)"></path>
+            </g>
+        </defs>
+    </svg>
+    <script>
+        (function () {
+            'use strict';
+            var snackbarContainer = document.querySelector('#demo-toast-example');
+            var showSnackbarButton = document.querySelector('#demo-show-toast');
+            var handler = function (event) {
+                showSnackbarButton.style.backgroundColor = '';
+            };
+            showSnackbarButton.addEventListener('click', function () {
+                'use strict';
+                showSnackbarButton.style.backgroundColor = '#' +
+                        Math.floor(Math.random() * 0xFFFFFF).toString(16);
+                var data = {
+                    message: 'Button color changed.',
+                    timeout: 2000,
+                    actionHandler: handler,
+                    actionText: 'Undo'
+                };
+                snackbarContainer.MaterialSnackbar.showSnackbar(data);
+            });
+        }());
+        {
+            gauging("gauge1", "Ship State", "Status", 1500);
+            gauging("gauge2", "Energy", "(in mAh)", 2300);
+            gauging("gauge3", "Autism", "(in SirBelvederes)", 4790);
+            gauging("gauge4", "Money", "(ignore %)", 3300);
+            function gauging(element, name, type, updateTime) {
+                var value = 100 * Math.random();
+                var current = value;
+                var distance = 0;
+                var opts = {
+                    lines: 12, // The number of lines to draw
+                    angle: 0, // The length of each line
+                    lineWidth: 0.15, // The line thickness
+                    pointer: {
+                        length: 0, // The radius of the inner circle
+                        strokeWidth: 0, // The rotation offset
+                        color: '#000000' // Fill color
+                    },
+                    limitMax: 'false',   // If true, the pointer will not go past the end of the gauge
+                    colorStart: '#f5f5f5',   // Colors
+                    colorStop: '#f5f5f5',    // just experiment with them
+                    strokeColor: '#f5f5f5',   // to see which ones work best for you
+                    responsive: true,
+                    generateGradient: true,
+                    percentColors: [[0.0, "#f44336"], [0.5, "#ff9800"], [1.0, "#cddc39"]]
+                };
+                var target = document.getElementById(element); // your canvas element
+                var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
+                gauge.maxValue = 100; // set max gauge value
+                gauge.animationSpeed = 250; // set animation speed (32 is default value)
+                gauge.set(value); // set actual value
+
+                setInterval(function () {
+                    value = 100 * Math.random();
+                    gauge.set(value);
+                }, updateTime);
+                setInterval(function () {
+                    distance = value - current;
+                    current = current + (distance / (33));
+                    // gauge.set(current)
+                }, 33)
+            }
+        }
+
+        {
+            var ppc = document.getElementsByClassName("progress-pie-chart")[0];
+            var value = 100 * Math.random();
+            // ppc.dataset.percent = value;
+            var current = value;
+            var distance = 0;
+
+            var filler = document.getElementsByClassName("filler")[0];
+            var spinner = document.getElementsByClassName("spinner")[0];
+            var mask = document.getElementsByClassName("mask")[0];
+            magicFunction(current);
+            var old = 0;
+
+
+            function magicFunction(current) {
+                var percent = current;
+                var deg = 360 * percent / 100;
+
+                if (percent > 50) {
+                    ppc.className = 'progress-pie-chart gt-50';
+                } else {
+                    ppc.className = 'progress-pie-chart';
+                }
+                var bar = document.getElementsByClassName("ppc-progress-fill")[0];
+                bar.style.transform = "rotate(" + deg + "deg)";
+                document.getElementsByClassName("ppc-span")[0].innerText = parseInt(percent) + "%";
+            }
+
+            setInterval(function () {
+                value = 100 * Math.random();
+            }, 1500);
+            setInterval(function () {
+                distance = value - current;
+                current = current + (distance / (33));
+                magicFunction(current)
+            }, 20)
+        }
+
+    </script>
 </body>
 </html>
