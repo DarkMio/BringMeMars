@@ -175,10 +175,24 @@
         </defs>
     </svg>
     <script>
-        new HalfGaugeDrawer("gauge1").render();
-        new HalfGaugeDrawer("gauge2").render();
-        new HalfGaugeDrawer("gauge3").render();
-        new HalfGaugeDrawer("gauge4").render();
+        var x = new HalfGaugeDrawer("gauge1");
+
+        var y = new HalfGaugeDrawer("gauge2");
+        var z = new HalfGaugeDrawer("gauge3");
+        var a = new HalfGaugeDrawer("gauge4");
+        x.draw(); y.draw(); z.draw(); a.draw();
+
+            setInterval(function () {
+                x.initialValue = 100 * Math.random();
+                y.initialValue = 100 * Math.random();
+                z.initialValue = 100 * Math.random();
+                a.initialValue = 100 * Math.random();
+                x.draw();
+                y.draw();
+                z.draw();
+                a.draw();
+            }, 1500);
+
 
         /*
         var n = 0;
