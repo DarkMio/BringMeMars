@@ -47,7 +47,7 @@ abstract class BaseGaugeDrawer {
     maxValue: number;
     value: number;
     current: number;
-    frame: any;
+    frame: number;
 
     constructor(idSelector: string, configuration?: any) {
         let element = document.getElementById(idSelector);
@@ -65,11 +65,14 @@ abstract class BaseGaugeDrawer {
         }
         this.context = this.canvas.getContext("2d");
         this.setConfiguration(configuration);
+        let ob = this;
     }
 
-    abstract draw();
+    protected abstract draw();
 
     render() {
+        this.canvas.height = this.canvas.offsetHeight;
+        this.canvas.width = this.canvas.offsetWidth;
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.draw();
     }
@@ -79,7 +82,7 @@ abstract class BaseGaugeDrawer {
         this.frame = window.requestAnimationFrame(setDraw);
         var obj = this;
         function setDraw(timestamp: number) {
-            if(Math.abs(obj.value - obj.current) < 0.01) {
+            if(Math.abs(obj.value - obj.current) < 0.005) {
                 window.cancelAnimationFrame(timestamp);
                 return;
             }
@@ -110,7 +113,6 @@ abstract class BaseGaugeDrawer {
         if(configuration == null) {
             configuration = def;
         }
-
         this.backgroundLineWidth = configuration.backgroundLineWidth || def.backgroundLineWidth;
         this.gaugeLineWidth = configuration.gaugeLineWidth || def.gaugeLineWidth;
         this.backgroundColor = configuration.backgroundColor || def.backgroundColor;
@@ -147,49 +149,51 @@ abstract class BaseGaugeDrawer {
         return [begin, stop]
     }
 
-    getValueAngle(value: number): [number, number] {
+    getValueAngle(value: number, fullDegree: number): [number, number] {
         var percentage = (value - this.minValue) * 100 / this.maxValue;
-        return BaseGaugeDrawer.getAdditiveAngle(180, percentage * 1.8);
+        fullDegree /= 100;
+        return BaseGaugeDrawer.getAdditiveAngle(180, percentage * fullDegree);
     }
 }
 
 
-class HalfGaugeDrawer extends BaseGaugeDrawer {
+class HalfGaugeMeter extends BaseGaugeDrawer {
     constructor(idSelector: string, configuration?: any) {
         configuration = configuration || new class{};
         configuration.displayFont = true;
         super(idSelector, configuration);
     }
 
-    draw() {
+    protected draw() {
         let width = this.canvas.width / 2;
-        let height = this.canvas.height * ( 1 - 0.05); //for padding
+        let height = this.canvas.height; // * ( 1 - 0.05); //for padding
+        let smaller = width > height ? height : width;
         this.context.lineCap = "butt";
-        this.drawGauge(width, height);
-        this.drawMeter(width, height);
+        this.drawGauge(width, height, smaller);
+        this.drawMeter(width, height, smaller);
         this.drawText(width, height);
 
     }
 
-    private drawGauge(width: number, height: number) {
+    private drawGauge(width: number, height: number, smaller: number) {
         var ctx = this.context;
         ctx.fillStyle = this.backgroundColor;
         ctx.strokeStyle = this.backgroundColor;
         ctx.beginPath();
         var halfArc = BaseGaugeDrawer.getAdditiveAngle(180, 180);
-        ctx.arc(width, height, height - 15, halfArc[0], halfArc[1], false);
+        ctx.arc(width, height, smaller - this.gaugeLineWidth, halfArc[0], halfArc[1], false);
         ctx.lineWidth = this.backgroundLineWidth;
         ctx.stroke();
     }
 
-    private drawMeter(width: number, height: number) {
+    private drawMeter(width: number, height: number, smaller: number) {
         var ctx = this.context;
         ctx.strokeStyle = this.gaugeColor;
         // ctx.fillStyle = "#cddc39";
         ctx.beginPath();
-        var gaugeArc = this.getValueAngle(this.current);
+        var gaugeArc = this.getValueAngle(this.current, 180);
 
-        ctx.arc(width, height, height - 15,  gaugeArc[0], gaugeArc[1], false);
+        ctx.arc(width, height, smaller - this.gaugeLineWidth,  gaugeArc[0], gaugeArc[1], false);
         ctx.lineWidth = this.gaugeLineWidth;
         ctx.stroke();
     }
@@ -202,8 +206,62 @@ class HalfGaugeDrawer extends BaseGaugeDrawer {
         ctx.fillStyle = "#000";
         ctx.font = this.fontStyle;
         ctx.textAlign = "center";
+        ctx.textBaseline = "bottom";
         // -1 because the font renderer smooths sometimes and looks like a bit below than this is
-        ctx.fillText(this.current.toFixed(2), width, height - 1);
+        ctx.fillText(this.current.toFixed(2) + this.appendText, width, height);
     }
 }
 
+class FullGaugeMeter extends BaseGaugeDrawer {
+    constructor(idSelector: string, configuration?: any) {
+        configuration = configuration || new class{};
+        configuration.displayFont = true;
+        super(idSelector, configuration);
+    }
+
+    protected draw() {
+        let width = this.canvas.width / 2;
+        let height = this.canvas.height / 2;
+        let smaller = width > height ? height : width;
+        this.context.lineCap = "butt";
+
+        this.drawGauge(width, height, smaller);
+        this.drawMeter(width, height, smaller);
+        this.drawText(width, height);
+    }
+
+    drawGauge(width: number, height: number, smaller: number) {
+        var ctx = this.context;
+        ctx.fillStyle = this.backgroundColor;
+        ctx.strokeStyle = this.backgroundColor;
+        ctx.beginPath();
+        var arc = BaseGaugeDrawer.getAngleDeg(0, 360);
+        var radius = (smaller - this.gaugeLineWidth);
+        ctx.arc(width, height, radius, arc[0], arc[1], false);
+        ctx.lineWidth = this.backgroundLineWidth;
+        ctx.stroke();
+    }
+
+    drawMeter(width: number, height: number, smaller: number) {
+        var ctx = this.context;
+        ctx.strokeStyle = this.gaugeColor;
+        ctx.beginPath();
+        var gaugeArc = this.getValueAngle(this.current, 360);
+        ctx.arc(width, height, smaller - this.gaugeLineWidth, gaugeArc[0], gaugeArc[1], false);
+        ctx.lineWidth = this.gaugeLineWidth;
+        ctx.stroke();
+    }
+
+    drawText(width: number, height: number) {
+        if(!this.displayFont) {
+            return;
+        }
+        var ctx = this.context;
+        ctx.fillStyle = "#000";
+        ctx.font = this.fontStyle;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        // -1 because the font renderer smooths sometimes and looks like a bit below than this is
+        ctx.fillText(this.current.toFixed(2) + this.appendText, width, height - 1);
+    }
+}

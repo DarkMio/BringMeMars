@@ -58,8 +58,11 @@ var BaseGaugeDrawer = (function () {
         }
         this.context = this.canvas.getContext("2d");
         this.setConfiguration(configuration);
+        var ob = this;
     }
     BaseGaugeDrawer.prototype.render = function () {
+        this.canvas.height = this.canvas.offsetHeight;
+        this.canvas.width = this.canvas.offsetWidth;
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.draw();
     };
@@ -68,7 +71,7 @@ var BaseGaugeDrawer = (function () {
         this.frame = window.requestAnimationFrame(setDraw);
         var obj = this;
         function setDraw(timestamp) {
-            if (Math.abs(obj.value - obj.current) < 0.01) {
+            if (Math.abs(obj.value - obj.current) < 0.005) {
                 window.cancelAnimationFrame(timestamp);
                 return;
             }
@@ -132,15 +135,16 @@ var BaseGaugeDrawer = (function () {
         var stop = begin + (angle / 180) * Math.PI;
         return [begin, stop];
     };
-    BaseGaugeDrawer.prototype.getValueAngle = function (value) {
+    BaseGaugeDrawer.prototype.getValueAngle = function (value, fullDegree) {
         var percentage = (value - this.minValue) * 100 / this.maxValue;
-        return BaseGaugeDrawer.getAdditiveAngle(180, percentage * 1.8);
+        fullDegree /= 100;
+        return BaseGaugeDrawer.getAdditiveAngle(180, percentage * fullDegree);
     };
     return BaseGaugeDrawer;
 }());
-var HalfGaugeDrawer = (function (_super) {
-    __extends(HalfGaugeDrawer, _super);
-    function HalfGaugeDrawer(idSelector, configuration) {
+var HalfGaugeMeter = (function (_super) {
+    __extends(HalfGaugeMeter, _super);
+    function HalfGaugeMeter(idSelector, configuration) {
         configuration = configuration || new (function () {
             function class_2() {
             }
@@ -149,35 +153,36 @@ var HalfGaugeDrawer = (function (_super) {
         configuration.displayFont = true;
         _super.call(this, idSelector, configuration);
     }
-    HalfGaugeDrawer.prototype.draw = function () {
+    HalfGaugeMeter.prototype.draw = function () {
         var width = this.canvas.width / 2;
-        var height = this.canvas.height * (1 - 0.05); //for padding
+        var height = this.canvas.height; // * ( 1 - 0.05); //for padding
+        var smaller = width > height ? height : width;
         this.context.lineCap = "butt";
-        this.drawGauge(width, height);
-        this.drawMeter(width, height);
+        this.drawGauge(width, height, smaller);
+        this.drawMeter(width, height, smaller);
         this.drawText(width, height);
     };
-    HalfGaugeDrawer.prototype.drawGauge = function (width, height) {
+    HalfGaugeMeter.prototype.drawGauge = function (width, height, smaller) {
         var ctx = this.context;
         ctx.fillStyle = this.backgroundColor;
         ctx.strokeStyle = this.backgroundColor;
         ctx.beginPath();
         var halfArc = BaseGaugeDrawer.getAdditiveAngle(180, 180);
-        ctx.arc(width, height, height - 15, halfArc[0], halfArc[1], false);
+        ctx.arc(width, height, smaller - this.gaugeLineWidth, halfArc[0], halfArc[1], false);
         ctx.lineWidth = this.backgroundLineWidth;
         ctx.stroke();
     };
-    HalfGaugeDrawer.prototype.drawMeter = function (width, height) {
+    HalfGaugeMeter.prototype.drawMeter = function (width, height, smaller) {
         var ctx = this.context;
         ctx.strokeStyle = this.gaugeColor;
         // ctx.fillStyle = "#cddc39";
         ctx.beginPath();
-        var gaugeArc = this.getValueAngle(this.current);
-        ctx.arc(width, height, height - 15, gaugeArc[0], gaugeArc[1], false);
+        var gaugeArc = this.getValueAngle(this.current, 180);
+        ctx.arc(width, height, smaller - this.gaugeLineWidth, gaugeArc[0], gaugeArc[1], false);
         ctx.lineWidth = this.gaugeLineWidth;
         ctx.stroke();
     };
-    HalfGaugeDrawer.prototype.drawText = function (width, height) {
+    HalfGaugeMeter.prototype.drawText = function (width, height) {
         if (!this.displayFont) {
             return;
         }
@@ -185,9 +190,64 @@ var HalfGaugeDrawer = (function (_super) {
         ctx.fillStyle = "#000";
         ctx.font = this.fontStyle;
         ctx.textAlign = "center";
+        ctx.textBaseline = "bottom";
         // -1 because the font renderer smooths sometimes and looks like a bit below than this is
-        ctx.fillText(this.current.toFixed(2), width, height - 1);
+        ctx.fillText(this.current.toFixed(2) + this.appendText, width, height);
     };
-    return HalfGaugeDrawer;
+    return HalfGaugeMeter;
+}(BaseGaugeDrawer));
+var FullGaugeMeter = (function (_super) {
+    __extends(FullGaugeMeter, _super);
+    function FullGaugeMeter(idSelector, configuration) {
+        configuration = configuration || new (function () {
+            function class_3() {
+            }
+            return class_3;
+        }());
+        configuration.displayFont = true;
+        _super.call(this, idSelector, configuration);
+    }
+    FullGaugeMeter.prototype.draw = function () {
+        var width = this.canvas.width / 2;
+        var height = this.canvas.height / 2;
+        var smaller = width > height ? height : width;
+        this.context.lineCap = "butt";
+        this.drawGauge(width, height, smaller);
+        this.drawMeter(width, height, smaller);
+        this.drawText(width, height);
+    };
+    FullGaugeMeter.prototype.drawGauge = function (width, height, smaller) {
+        var ctx = this.context;
+        ctx.fillStyle = this.backgroundColor;
+        ctx.strokeStyle = this.backgroundColor;
+        ctx.beginPath();
+        var arc = BaseGaugeDrawer.getAngleDeg(0, 360);
+        var radius = (smaller - this.gaugeLineWidth);
+        ctx.arc(width, height, radius, arc[0], arc[1], false);
+        ctx.lineWidth = this.backgroundLineWidth;
+        ctx.stroke();
+    };
+    FullGaugeMeter.prototype.drawMeter = function (width, height, smaller) {
+        var ctx = this.context;
+        ctx.strokeStyle = this.gaugeColor;
+        ctx.beginPath();
+        var gaugeArc = this.getValueAngle(this.current, 360);
+        ctx.arc(width, height, smaller - this.gaugeLineWidth, gaugeArc[0], gaugeArc[1], false);
+        ctx.lineWidth = this.gaugeLineWidth;
+        ctx.stroke();
+    };
+    FullGaugeMeter.prototype.drawText = function (width, height) {
+        if (!this.displayFont) {
+            return;
+        }
+        var ctx = this.context;
+        ctx.fillStyle = "#000";
+        ctx.font = this.fontStyle;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        // -1 because the font renderer smooths sometimes and looks like a bit below than this is
+        ctx.fillText(this.current.toFixed(2) + this.appendText, width, height - 1);
+    };
+    return FullGaugeMeter;
 }(BaseGaugeDrawer));
 //# sourceMappingURL=gauge.js.map

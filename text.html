@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Bring Me Mars | An Idle Game</title>
+    <title>2030: A Space Oddity</title>
     <link rel="stylesheet" href="static/css/material.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet"
@@ -17,7 +17,7 @@
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
             <!-- Title -->
-            <span class="mdl-layout-title">Bring Me the Mars</span>
+            <span class="mdl-layout-title">2030: A Space Oddity</span>
         </div>
         <!-- Tabs -->
         <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
@@ -46,6 +46,7 @@
                         </div>
                     </div>
                     <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
+                        <!--
                         <div class="progress-pie-chart" data-percent="43">
                             <div class="ppc-progress">
                                 <div class="ppc-progress-fill"></div>
@@ -56,6 +57,9 @@
                                 </div>
                             </div>
                         </div>
+                        -->
+
+                        <canvas id="circle"></canvas>
                     </div>
                     <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
                         <div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
@@ -175,19 +179,23 @@
         </defs>
     </svg>
     <script>
-        var x = new HalfGaugeDrawer("gauge1");
+        var x = new HalfGaugeMeter("gauge1", {appendText: "%"});
+        var y = new HalfGaugeMeter("gauge2", {appendText: "%"});
+        var z = new HalfGaugeMeter("gauge3", {appendText: "%"});
+        var a = new HalfGaugeMeter("gauge4", {appendText: "%"});
+        var b = new FullGaugeMeter("circle", {appendText: "%"});
+        x.render(); y.render(); z.render(); a.render();
+        b.render();
 
-        var y = new HalfGaugeDrawer("gauge2");
-        var z = new HalfGaugeDrawer("gauge3");
-        var a = new HalfGaugeDrawer("gauge4");
-        x.draw(); y.draw(); z.draw(); a.draw();
+        console.log(b);
 
             setInterval(function () {
                 x.set(100 * Math.random());
                 y.set(100 * Math.random());
                 z.set(100 * Math.random());
                 a.set(100 * Math.random());
-            }, 1500);
+                b.set(100 * Math.random());
+            }, 2500);
 
 
         /*
