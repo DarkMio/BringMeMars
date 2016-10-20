@@ -147,35 +147,38 @@ class HalfGaugeDrawer extends BaseGaugeDrawer {
     }
 
     private drawGauge(width: number, height: number) {
-        this.context.fillStyle = this.backgroundColor;
-        this.context.strokeStyle = this.backgroundColor;
-        this.context.beginPath();
+        var ctx = this.context;
+        ctx.fillStyle = this.backgroundColor;
+        ctx.strokeStyle = this.backgroundColor;
+        ctx.beginPath();
         var halfArc = BaseGaugeDrawer.getAdditiveAngle(180, 180);
-        this.context.arc(width, height, height - 15, halfArc[0], halfArc[1], false);
-        this.context.lineWidth = this.backgroundLineWidth;
-        this.context.stroke();
+        ctx.arc(width, height, height - 15, halfArc[0], halfArc[1], false);
+        ctx.lineWidth = this.backgroundLineWidth;
+        ctx.stroke();
     }
 
     private drawMeter(width: number, height: number) {
-        this.context.strokeStyle = this.gaugeColor;
-        // this.context.fillStyle = "#cddc39";
-        this.context.beginPath();
+        var ctx = this.context;
+        ctx.strokeStyle = this.gaugeColor;
+        // ctx.fillStyle = "#cddc39";
+        ctx.beginPath();
         var gaugeArc = this.getValueAngle(this.initialValue);
 
-        this.context.arc(width, height, height - 15,  gaugeArc[0], gaugeArc[1], false);
-        this.context.lineWidth = this.gaugeLineWidth;
-        this.context.stroke();
+        ctx.arc(width, height, height - 15,  gaugeArc[0], gaugeArc[1], false);
+        ctx.lineWidth = this.gaugeLineWidth;
+        ctx.stroke();
     }
 
     private drawText(width: number, height: number) {
         if(!this.displayFont) {
             return;
         }
-        this.context.fillStyle = "#000";
-        this.context.font = this.fontStyle;
-        this.context.textAlign = "center";
+        var ctx = this.context;
+        ctx.fillStyle = "#000";
+        ctx.font = this.fontStyle;
+        ctx.textAlign = "center";
         // -1 because the font renderer smooths sometimes and looks like a bit below than this is
-        this.context.fillText(this.initialValue.toFixed(2), width, height - 1);
+        ctx.fillText(this.initialValue.toFixed(2), width, height - 1);
     }
 }
 
