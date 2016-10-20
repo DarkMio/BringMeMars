@@ -87,7 +87,7 @@ abstract class BaseGaugeDrawer {
                 return;
             }
             var distance = obj.value - obj.current;
-            obj.current = obj.current + distance / 10;
+            obj.current = obj.current + distance / 8;
             obj.render();
             window.requestAnimationFrame(setDraw)
         }
