@@ -136,6 +136,7 @@ class HalfGaugeDrawer extends BaseGaugeDrawer {
     }
 
     draw() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         let width = this.canvas.width / 2;
         let height = this.canvas.height * ( 1 - 0.05); //for padding
         this.context.lineCap = "butt";
@@ -143,7 +144,6 @@ class HalfGaugeDrawer extends BaseGaugeDrawer {
         this.drawMeter(width, height);
         this.drawText(width, height);
 
-        this.context.clearRect(0,0,this.canvas.width,this.canvas.height);
     }
 
     private drawGauge(width: number, height: number) {

@@ -130,13 +130,13 @@ var HalfGaugeDrawer = (function (_super) {
         _super.call(this, idSelector, configuration);
     }
     HalfGaugeDrawer.prototype.draw = function () {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         var width = this.canvas.width / 2;
         var height = this.canvas.height * (1 - 0.05); //for padding
         this.context.lineCap = "butt";
         this.drawGauge(width, height);
         this.drawMeter(width, height);
         this.drawText(width, height);
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     };
     HalfGaugeDrawer.prototype.drawGauge = function (width, height) {
         this.context.fillStyle = this.backgroundColor;
