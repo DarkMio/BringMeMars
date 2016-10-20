@@ -183,14 +183,10 @@
         x.draw(); y.draw(); z.draw(); a.draw();
 
             setInterval(function () {
-                x.initialValue = 100 * Math.random();
-                y.initialValue = 100 * Math.random();
-                z.initialValue = 100 * Math.random();
-                a.initialValue = 100 * Math.random();
-                x.draw();
-                y.draw();
-                z.draw();
-                a.draw();
+                x.set(100 * Math.random());
+                y.set(100 * Math.random());
+                z.set(100 * Math.random());
+                a.set(100 * Math.random());
             }, 1500);
 
 

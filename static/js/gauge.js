@@ -59,6 +59,25 @@ var BaseGaugeDrawer = (function () {
         this.context = this.canvas.getContext("2d");
         this.setConfiguration(configuration);
     }
+    BaseGaugeDrawer.prototype.render = function () {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.draw();
+    };
+    BaseGaugeDrawer.prototype.set = function (value) {
+        this.value = value;
+        this.frame = window.requestAnimationFrame(setDraw);
+        var obj = this;
+        function setDraw(timestamp) {
+            if (Math.abs(obj.value - obj.current) < 0.01) {
+                window.cancelAnimationFrame(timestamp);
+                return;
+            }
+            var distance = obj.value - obj.current;
+            obj.current = obj.current + distance / 10;
+            obj.render();
+            window.requestAnimationFrame(setDraw);
+        }
+    };
     BaseGaugeDrawer.getDefaultConfiguration = function () {
         return new (function () {
             function class_1() {
@@ -89,7 +108,8 @@ var BaseGaugeDrawer = (function () {
         this.appendText = configuration.appendText || def.appendText;
         this.minValue = configuration.minValue || def.minValue;
         this.maxValue = configuration.maxValue || def.maxValue;
-        this.initialValue = configuration.initialValue || this.minValue + Math.random() * this.maxValue;
+        this.value = configuration.value || this.minValue + Math.random() * this.maxValue;
+        this.current = this.value;
     };
     /**
      * Let's say we draw horizontally, where east is 0°, south 90°, west 180° and north 270°
@@ -130,7 +150,6 @@ var HalfGaugeDrawer = (function (_super) {
         _super.call(this, idSelector, configuration);
     }
     HalfGaugeDrawer.prototype.draw = function () {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         var width = this.canvas.width / 2;
         var height = this.canvas.height * (1 - 0.05); //for padding
         this.context.lineCap = "butt";
@@ -153,7 +172,7 @@ var HalfGaugeDrawer = (function (_super) {
         ctx.strokeStyle = this.gaugeColor;
         // ctx.fillStyle = "#cddc39";
         ctx.beginPath();
-        var gaugeArc = this.getValueAngle(this.initialValue);
+        var gaugeArc = this.getValueAngle(this.current);
         ctx.arc(width, height, height - 15, gaugeArc[0], gaugeArc[1], false);
         ctx.lineWidth = this.gaugeLineWidth;
         ctx.stroke();
@@ -167,7 +186,7 @@ var HalfGaugeDrawer = (function (_super) {
         ctx.font = this.fontStyle;
         ctx.textAlign = "center";
         // -1 because the font renderer smooths sometimes and looks like a bit below than this is
-        ctx.fillText(this.initialValue.toFixed(2), width, height - 1);
+        ctx.fillText(this.current.toFixed(2), width, height - 1);
     };
     return HalfGaugeDrawer;
 }(BaseGaugeDrawer));
