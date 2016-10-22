@@ -33,6 +33,7 @@ function setupRequestAnimationFrame() {
  * An abstract class containing the most bare and basic methods to draw any kind of gauge.
  */
 abstract class BaseGaugeDrawer {
+    active: boolean;
     canvas: HTMLCanvasElement;
     context: CanvasRenderingContext2D;
 
@@ -50,6 +51,7 @@ abstract class BaseGaugeDrawer {
     frame: number;
 
     constructor(idSelector: string, configuration?: any) {
+        this.active = true;
         let element = document.getElementById(idSelector);
         if(element instanceof HTMLCanvasElement) {
             this.canvas = element;
@@ -71,10 +73,24 @@ abstract class BaseGaugeDrawer {
     protected abstract draw();
 
     render() {
+        if(!this.active) {
+            return;
+        }
         this.canvas.height = this.canvas.offsetHeight;
         this.canvas.width = this.canvas.offsetWidth;
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.draw();
+    }
+
+    disable() {
+        this.active = false;
+    }
+
+    enable() {
+        if(!this.active) {
+            this.active = true;
+            this.render()
+        }
     }
 
     set(value: number) {

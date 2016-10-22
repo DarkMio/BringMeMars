@@ -40,6 +40,7 @@ function setupRequestAnimationFrame() {
  */
 var BaseGaugeDrawer = (function () {
     function BaseGaugeDrawer(idSelector, configuration) {
+        this.active = true;
         var element = document.getElementById(idSelector);
         if (element instanceof HTMLCanvasElement) {
             this.canvas = element;
@@ -61,10 +62,22 @@ var BaseGaugeDrawer = (function () {
         var ob = this;
     }
     BaseGaugeDrawer.prototype.render = function () {
+        if (!this.active) {
+            return;
+        }
         this.canvas.height = this.canvas.offsetHeight;
         this.canvas.width = this.canvas.offsetWidth;
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.draw();
+    };
+    BaseGaugeDrawer.prototype.disable = function () {
+        this.active = false;
+    };
+    BaseGaugeDrawer.prototype.enable = function () {
+        if (!this.active) {
+            this.active = true;
+            this.render();
+        }
     };
     BaseGaugeDrawer.prototype.set = function (value) {
         this.value = value;

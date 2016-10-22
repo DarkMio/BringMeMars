@@ -1,5 +1,23 @@
 canvas {
     width: 100%;
+    height: auto;
+}
+
+.mdl-card__supporting-text__fix {
+    width: 97%;
+}
+
+.mdl-textfield--small {
+    width: 25px;
+}
+
+.mdl-textfield--full {
+    width: 100%
+}
+
+.mdl-list--small {
+    padding: 0;
+    margin: 0;
 }
 
 .dashboard {
