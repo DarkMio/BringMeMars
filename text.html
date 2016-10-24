@@ -1,325 +1,346 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>2030: A Space Oddity</title>
-    <link rel="stylesheet" href="static/css/material.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-    <link rel="stylesheet" href="static/css/app.css">
-    <script src="static/js/lib/material/material.js"></script>
-    <script src="static/js/gauge.js"></script>
-    <script src="static/js/configuration.js"></script>
+  <title>2030: A Space Oddity</title>
+  <link rel="stylesheet" href="static/css/material.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+  <link rel="stylesheet" href="static/css/app.css">
+  <script src="static/js/lib/material/material.js"></script>
+  <script src="static/js/gauge.js"></script>
+  <script src="static/js/configuration.js"></script>
 </head>
 <body>
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
             mdl-layout--fixed-tabs">
-    <header class="mdl-layout__header">
-        <div class="mdl-layout__header-row">
-            <!-- Title -->
-            <span class="mdl-layout-title">2030: A Space Oddity</span>
-        </div>
-        <!-- Tabs -->
-        <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-            <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Mission Overview</a>
-            <a href="#fixed-tab-2" class="mdl-layout__tab">Upgrades</a>
-            <a href="#fixed-tab-3" class="mdl-layout__tab">Lifetime Statistics</a>
-            <a href="#options" class="mdl-layout__tab">Options</a>
-        </div>
-    </header>
-    <main class="mdl-layout__content mdl-color--grey-100">
-        <!-- Lets make a dashboard from here: -->
-        <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
-            <div class="page-content">
-                <div class="mdl-grid dashboard">
-                    <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-                        <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop">
-                            <canvas id="gauge1"></canvas>
-                        </div>
-                        <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop">
-                            <canvas id="gauge2"></canvas>
-                        </div>
-                        <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop">
-                            <canvas id="gauge3"></canvas>
-                        </div>
-                        <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop">
-                            <canvas id="gauge4"></canvas>
-                        </div>
-                    </div>
-                    <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
-                        <div class="mdl-grid">
-                            <div class="mdl-cell--6-col">
-                                <canvas id="circle"></canvas>
-                            </div>
-                            <div class="mdl-cell--6-col" >
-                                <p>
-                                    Look at all the fucks I give:
-                                    <input class="mdl-slider mdl-js-slider" type="range" min="0" max="10" step="1">
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
-                        <div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
-                            <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
-                                <h2 class="mdl-card__title-text">Updates</h2>
-                            </div>
-                            <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                                Non dolore elit adipisicing ea reprehenderit consectetur culpa.
-                            </div>
-                            <div class="mdl-card__actions mdl-card--border">
-                                <a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect"
-                                   data-upgraded=",MaterialButton,MaterialRipple">Read More<span
-                                        class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></a>
-                            </div>
-                        </div>
-                        <div class="separator mdl-cell--1-col"></div>
-                        <div class="demo-options mdl-card mdl-color--deep-purple-500 mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--12-col-desktop">
-                            <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
-                                <h3>View options</h3>
-                                <ul>
-                                    <li>
-                                        <label for="chkbox1"
-                                               class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded"
-                                               data-upgraded=",MaterialCheckbox,MaterialRipple">
-                                            <input type="checkbox" id="chkbox1" class="mdl-checkbox__input">
-                                            <span class="mdl-checkbox__label">Click per object</span>
-                                            <span class="mdl-checkbox__focus-helper"></span><span
-                                                class="mdl-checkbox__box-outline"><span
-                                                class="mdl-checkbox__tick-outline"></span></span><span
-                                                class="mdl-checkbox__ripple-container mdl-js-ripple-effect mdl-ripple--center"
-                                                data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></label>
-                                    </li>
-                                    <li>
-                                        <label for="chkbox2"
-                                               class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded"
-                                               data-upgraded=",MaterialCheckbox,MaterialRipple">
-                                            <input type="checkbox" id="chkbox2" class="mdl-checkbox__input">
-                                            <span class="mdl-checkbox__label">Views per object</span>
-                                            <span class="mdl-checkbox__focus-helper"></span><span
-                                                class="mdl-checkbox__box-outline"><span
-                                                class="mdl-checkbox__tick-outline"></span></span><span
-                                                class="mdl-checkbox__ripple-container mdl-js-ripple-effect mdl-ripple--center"
-                                                data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></label>
-                                    </li>
-                                    <li>
-                                        <label for="chkbox3"
-                                               class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded"
-                                               data-upgraded=",MaterialCheckbox,MaterialRipple">
-                                            <input type="checkbox" id="chkbox3" class="mdl-checkbox__input">
-                                            <span class="mdl-checkbox__label">Objects selected</span>
-                                            <span class="mdl-checkbox__focus-helper"></span><span
-                                                class="mdl-checkbox__box-outline"><span
-                                                class="mdl-checkbox__tick-outline"></span></span><span
-                                                class="mdl-checkbox__ripple-container mdl-js-ripple-effect mdl-ripple--center"
-                                                data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></label>
-                                    </li>
-                                    <li>
-                                        <label for="chkbox4"
-                                               class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded"
-                                               data-upgraded=",MaterialCheckbox,MaterialRipple">
-                                            <input type="checkbox" id="chkbox4" class="mdl-checkbox__input">
-                                            <span class="mdl-checkbox__label">Objects viewed</span>
-                                            <span class="mdl-checkbox__focus-helper"></span><span
-                                                class="mdl-checkbox__box-outline"><span
-                                                class="mdl-checkbox__tick-outline"></span></span><span
-                                                class="mdl-checkbox__ripple-container mdl-js-ripple-effect mdl-ripple--center"
-                                                data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></label>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="mdl-card__actions mdl-card--border">
-                                <a href="#"
-                                   class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--blue-grey-50"
-                                   data-upgraded=",MaterialButton,MaterialRipple">Change location<span
-                                        class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></a>
-                                <div class="mdl-layout-spacer"></div>
-                                <i class="material-icons">location_on</i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title">2030: A Space Oddity</span>
+    </div>
+    <!-- Tabs -->
+    <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+      <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Mission Overview</a>
+      <a href="#fixed-tab-2" class="mdl-layout__tab">Upgrades</a>
+      <a href="#fixed-tab-3" class="mdl-layout__tab">Lifetime Statistics</a>
+      <a href="#options" class="mdl-layout__tab">Options</a>
+    </div>
+  </header>
+  <main class="mdl-layout__content mdl-color--grey-100">
+    <!-- Lets make a dashboard from here: -->
+    <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+      <div class="page-content">
+        <div class="mdl-grid dashboard">
+          <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop">
+              <canvas id="gauge1"></canvas>
             </div>
-        </section>
-        <section class="mdl-layout__tab-panel" id="fixed-tab-2">
-            <div class="page-content"><!-- Your content goes here --></div>
-        </section>
-        <section class="mdl-layout__tab-panel" id="fixed-tab-3">
-            <div class="page-content">
-                <div class="mdl-grid dashboard">
-                    <div class="mdl-cell--12-col mdl-typography--text-center">
-                        <button id="demo-show-toast" class="mdl-button mdl-js-button mdl-button--raised" type="button">
-                            Show Toast
-                        </button>
-                    </div>
-                </div>
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop">
+              <canvas id="gauge2"></canvas>
             </div>
-        </section>
-        <section class="mdl-layout__tab-panel" id="options">
-            <div class="page-content">
-                <div class="mdl-grid dashboard">
-                    <div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
-                        <div class="mdl-card__title mdl-card--expand mdl-color--green-200">
-                            <h2 class="mdl-card__title-text">Configuration</h2>
-                        </div>
-                        <div class="mdl-card__supporting-text mdl-card__supporting-text__fix mdl-color-text--grey-600">
-                            <div class="mdl-grid">
-                                <!-- group for fps -->
-                                <div class="mdl-cell mdl-cell--6-col">
-                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--small">
-                                        <input class="mdl-textfield__input" type="number" id="fpsInput" min="1" max="60">
-                                        <label class="mdl-textfield__label" for="fpsInput">FPS</label>
-                                    </div>
-                                    <span id="frameText">Frames per second</span>
-                                    <div class="mdl-tooltip" for="frameText">
-                                        Frames are calculations per second. If you're having any issues, you can set this value lower.
-                                    </div>
-                                </div>
-                                <div class="mdl-cell mdl-cell--6-col">
-                                    <input class="mdl-slider mdl-js-slider" type="range" min="1" max="60" step="1" id="fpsSlider">
-                                </div>
-                                <!-- numerical notation group -->
-                                <div class="mdl-cell mdl-cell--6-col">
-                                    <span id="numberFormatText">Number format</span>
-                                    <div class="mdl-tooltip" for="numberFormatText">
-                                        Numbers might be more readable for you in different numerical notations.
-                                    </div>
-                                </div>
-                                <div class="mdl-cell mdl-cell--6-col">
-                                    <ul class="mdl-list mdl-list--small">
-                                        <li>
-                                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
-                                                <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="1" checked>
-                                                <span class="mdl-radio__label">Standard</span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
-                                                <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="2">
-                                                <span class="mdl-radio__label">Scientific-E</span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
-                                                <input type="radio" id="option-3" class="mdl-radio__button" name="options" value="3">
-                                                <span class="mdl-radio__label">Hybrid</span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
-                                                <input type="radio" id="option-4" class="mdl-radio__button" name="options" value="4">
-                                                <span class="mdl-radio__label">Engineering</span>
-                                            </label>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- velocity format group -->
-                                <div class="mdl-cell mdl-cell--6-col">
-                                    <span id="velocityFormat">Velocity format</span>
-                                    <div class="mdl-tooltip" for="velocityFormat">
-                                        Depending on your game idle time.
-                                    </div>
-                                </div>
-                                <div class="mdl-cell mdl-cell--6-col">
-                                    <ul class="mdl-list mdl-list--small">
-                                        <li>
-                                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
-                                                <input type="radio" id="velocitySeconds" class="mdl-radio__button" name="options" value="1" checked>
-                                                <span class="mdl-radio__label">Seconds</span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
-                                                <input type="radio" id="velocityMinutes" class="mdl-radio__button" name="options" value="2">
-                                                <span class="mdl-radio__label">Minutes</span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
-                                                <input type="radio" id="velocityHours" class="mdl-radio__button" name="options" value="3">
-                                                <span class="mdl-radio__label">Hours</span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
-                                                <input type="radio" id="velocityDays" class="mdl-radio__button" name="options" value="4">
-                                                <span class="mdl-radio__label">Days</span>
-                                            </label>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- save file -->
-                                <div class="mdl-cell mdl-cell--6-col">
-                                    <span id="saveFileText">Full Save File</span>
-                                    <div class="mdl-tooltip" for="saveFileText">
-                                        In case you want to store it manually
-                                    </div>
-                                </div>
-                                <div class="mdl-cell mdl-cell--6-col">
-                                    <form action="#">
-                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--full-width">
-                                            <textarea class="mdl-textfield__input" type="text" rows= "5" id="saveFile">MS4wLjU5|Q2hlYXRlciA6KAoKN4IgrgdglgLjCeAHApgZxALlFCA3KqUARgDbIAWAhjAMbnIBO8mIAjCADQgC2y1LAZgCsnECUoNclFqwAMomgHsliiC3lcYjBrEVN1o5BEYBzZhhAaQDNChoBRYwzMGuxgB5h0FqzSaoYShJXHjBAkyMQxBt</textarea>
-                                            <label class="mdl-textfield__label" for="saveFile">A save file should be displayed here</label>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mdl-card__actions mdl-card--border mdl-grid">
-                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect">New Game</button>
-                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect">Save</button>
-                            <div class="mdl-layout-spacer"></div>
-                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect">Export</button>
-                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect">Import</button>
-                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--accent">Reset</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop">
+              <canvas id="gauge3"></canvas>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop">
+              <canvas id="gauge4"></canvas>
+            </div>
+          </div>
+          <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
+            <div class="mdl-grid">
+              <div class="mdl-cell--6-col">
+                <canvas id="circle"></canvas>
+              </div>
+              <div class="mdl-cell--6-col">
+                <p>
+                  Look at all the fucks I give:
+                  <input class="mdl-slider mdl-js-slider" type="range" min="0" max="10" step="1">
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
+            <div
+                class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
+              <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
+                <h2 class="mdl-card__title-text">Updates</h2>
+              </div>
+              <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                Non dolore elit adipisicing ea reprehenderit consectetur culpa.
+              </div>
+              <div class="mdl-card__actions mdl-card--border">
+                <a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect"
+                   data-upgraded=",MaterialButton,MaterialRipple">Read More<span
+                    class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></a>
+              </div>
+            </div>
+            <div class="separator mdl-cell--1-col"></div>
+            <div
+                class="demo-options mdl-card mdl-color--deep-purple-500 mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--12-col-desktop">
+              <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+                <h3>View options</h3>
+                <ul>
+                  <li>
+                    <label for="chkbox1"
+                           class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded"
+                           data-upgraded=",MaterialCheckbox,MaterialRipple">
+                      <input type="checkbox" id="chkbox1" class="mdl-checkbox__input">
+                      <span class="mdl-checkbox__label">Click per object</span>
+                      <span class="mdl-checkbox__focus-helper"></span><span
+                        class="mdl-checkbox__box-outline"><span
+                        class="mdl-checkbox__tick-outline"></span></span><span
+                        class="mdl-checkbox__ripple-container mdl-js-ripple-effect mdl-ripple--center"
+                        data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></label>
+                  </li>
+                  <li>
+                    <label for="chkbox2"
+                           class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded"
+                           data-upgraded=",MaterialCheckbox,MaterialRipple">
+                      <input type="checkbox" id="chkbox2" class="mdl-checkbox__input">
+                      <span class="mdl-checkbox__label">Views per object</span>
+                      <span class="mdl-checkbox__focus-helper"></span><span
+                        class="mdl-checkbox__box-outline"><span
+                        class="mdl-checkbox__tick-outline"></span></span><span
+                        class="mdl-checkbox__ripple-container mdl-js-ripple-effect mdl-ripple--center"
+                        data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></label>
+                  </li>
+                  <li>
+                    <label for="chkbox3"
+                           class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded"
+                           data-upgraded=",MaterialCheckbox,MaterialRipple">
+                      <input type="checkbox" id="chkbox3" class="mdl-checkbox__input">
+                      <span class="mdl-checkbox__label">Objects selected</span>
+                      <span class="mdl-checkbox__focus-helper"></span><span
+                        class="mdl-checkbox__box-outline"><span
+                        class="mdl-checkbox__tick-outline"></span></span><span
+                        class="mdl-checkbox__ripple-container mdl-js-ripple-effect mdl-ripple--center"
+                        data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></label>
+                  </li>
+                  <li>
+                    <label for="chkbox4"
+                           class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded"
+                           data-upgraded=",MaterialCheckbox,MaterialRipple">
+                      <input type="checkbox" id="chkbox4" class="mdl-checkbox__input">
+                      <span class="mdl-checkbox__label">Objects viewed</span>
+                      <span class="mdl-checkbox__focus-helper"></span><span
+                        class="mdl-checkbox__box-outline"><span
+                        class="mdl-checkbox__tick-outline"></span></span><span
+                        class="mdl-checkbox__ripple-container mdl-js-ripple-effect mdl-ripple--center"
+                        data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></label>
+                  </li>
+                </ul>
+              </div>
+              <div class="mdl-card__actions mdl-card--border">
+                <a href="#"
+                   class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--blue-grey-50"
+                   data-upgraded=",MaterialButton,MaterialRipple">Change location<span
+                    class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></a>
+                <div class="mdl-layout-spacer"></div>
+                <i class="material-icons">location_on</i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="mdl-layout__tab-panel" id="fixed-tab-2">
+      <div class="page-content"><!-- Your content goes here --></div>
+    </section>
+    <section class="mdl-layout__tab-panel" id="fixed-tab-3">
+      <div class="page-content">
+        <div class="mdl-grid dashboard">
+          <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell-12-col mdl-cell--12-col-desktop">
+            <div class="mdl-card__title mdl-card--expand mdl-color-text--blue-900">
+              Lifetime Statistics
+            </div>
+            <div class="mdl-card__supporting-text mdl-card__supporting-text__fix mdl-color-text--grey-600">
+              Text.
+            </div>
+            <div class="mdl-card__actions mdl-card--border mdl-grid">
+              <button id="demo-show-toast" class="mdl-button mdl-js-button mdl-js-ripple-effect" type="button">
+                Show Toast
+              </button>
             </div>
 
-        </section>
-    </main>
+          </div>
+          <div class="mdl-cell--12-col mdl-typography--text-center">
+
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="mdl-layout__tab-panel" id="options">
+      <div class="page-content">
+        <div class="mdl-grid dashboard">
+          <div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-desktop">
+            <div class="mdl-card__title mdl-card--expand mdl-color-text--blue-900">
+              <h2 class="mdl-card__title-text">Configuration</h2>
+            </div>
+            <div class="mdl-card__supporting-text mdl-card__supporting-text__fix mdl-color-text--grey-600">
+              <div class="mdl-grid">
+                <!-- group for fps -->
+                <div class="mdl-cell mdl-cell--6-col">
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--small">
+                    <input class="mdl-textfield__input" type="number" id="fpsInput" min="1" max="60">
+                    <label class="mdl-textfield__label" for="fpsInput">FPS</label>
+                  </div>
+                  <span id="frameText">Frames per second. </span>This is a tick every <span id="frameTime">0</span>ms.
+                  <div class="mdl-tooltip" for="frameText">
+                    Frames are calculations per second. If you're having any issues, you can set this value lower.
+                  </div>
+                </div>
+                <div class="mdl-cell mdl-cell--6-col">
+                  <input class="mdl-slider mdl-js-slider" type="range" min="1" max="60" step="1" id="fpsSlider">
+                </div>
+                <!-- numerical notation group -->
+                <div class="mdl-cell mdl-cell--6-col">
+                  <span id="numberFormatText">Number format</span>
+                  <div class="mdl-tooltip" for="numberFormatText">
+                    Numbers might be more readable for you in different numerical notations.
+                  </div>
+                </div>
+                <div class="mdl-cell mdl-cell--6-col">
+                  <ul class="mdl-list mdl-list--small">
+                    <li>
+                      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
+                        <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="1" checked>
+                        <span class="mdl-radio__label">Standard</span>
+                      </label>
+                    </li>
+                    <li>
+                      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+                        <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="2">
+                        <span class="mdl-radio__label">Scientific-E</span>
+                      </label>
+                    </li>
+                    <li>
+                      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+                        <input type="radio" id="option-3" class="mdl-radio__button" name="options" value="3">
+                        <span class="mdl-radio__label">Hybrid</span>
+                      </label>
+                    </li>
+                    <li>
+                      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+                        <input type="radio" id="option-4" class="mdl-radio__button" name="options" value="4">
+                        <span class="mdl-radio__label">Engineering</span>
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+                <!-- velocity format group -->
+                <div class="mdl-cell mdl-cell--6-col">
+                  <span id="velocityFormat">Velocity format</span>
+                  <div class="mdl-tooltip" for="velocityFormat">
+                    Depending on your game idle time.
+                  </div>
+                </div>
+                <div class="mdl-cell mdl-cell--6-col">
+                  <ul class="mdl-list mdl-list--small">
+                    <li>
+                      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
+                        <input type="radio" id="velocitySeconds" class="mdl-radio__button" name="options" value="1"
+                               checked>
+                        <span class="mdl-radio__label">Seconds</span>
+                      </label>
+                    </li>
+                    <li>
+                      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+                        <input type="radio" id="velocityMinutes" class="mdl-radio__button" name="options" value="2">
+                        <span class="mdl-radio__label">Minutes</span>
+                      </label>
+                    </li>
+                    <li>
+                      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+                        <input type="radio" id="velocityHours" class="mdl-radio__button" name="options" value="3">
+                        <span class="mdl-radio__label">Hours</span>
+                      </label>
+                    </li>
+                    <li>
+                      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+                        <input type="radio" id="velocityDays" class="mdl-radio__button" name="options" value="4">
+                        <span class="mdl-radio__label">Days</span>
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+                <!-- save file -->
+                <div class="mdl-cell mdl-cell--6-col">
+                  <span id="saveFileText">Full Save File</span>
+                  <div class="mdl-tooltip" for="saveFileText">
+                    In case you want to store it manually
+                  </div>
+                </div>
+                <div class="mdl-cell mdl-cell--6-col">
+                  <form action="#">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--full-width">
+                      <textarea class="mdl-textfield__input" type="text" rows="5" id="saveFile">MS4wLjU5|Q2hlYXRlciA6KAoKN4IgrgdglgLjCeAHApgZxALlFCA3KqUARgDbIAWAhjAMbnIBO8mIAjCADQgC2y1LAZgCsnECUoNclFqwAMomgHsliiC3lcYjBrEVN1o5BEYBzZhhAaQDNChoBRYwzMGuxgB5h0FqzSaoYShJXHjBAkyMQxBt</textarea>
+                      <label class="mdl-textfield__label" for="saveFile">A save file should be displayed here</label>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="mdl-card__actions mdl-card--border mdl-grid">
+              <button class="mdl-button mdl-js-button mdl-js-ripple-effect">New Game</button>
+              <button class="mdl-button mdl-js-button mdl-js-ripple-effect">Save</button>
+              <div class="mdl-layout-spacer"></div>
+              <button class="mdl-button mdl-js-button mdl-js-ripple-effect">Export</button>
+              <button class="mdl-button mdl-js-button mdl-js-ripple-effect">Import</button>
+              <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--accent">Reset</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
 </div>
 
 <div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
-    <div class="mdl-snackbar__text"></div>
-    <button class="mdl-snackbar__action" type="button">x</button>
-    <script>
+  <div class="mdl-snackbar__text"></div>
+  <button class="mdl-snackbar__action" type="button">x</button>
+  <script>
 
 
+    var x = new HalfGaugeMeter("gauge1", {appendText: "%"});
+    var y = new HalfGaugeMeter("gauge2", {appendText: "%"});
+    var z = new HalfGaugeMeter("gauge3", {appendText: "%"});
+    var a = new HalfGaugeMeter("gauge4", {appendText: "%"});
+    var b = new FullGaugeMeter("circle", {appendText: "%"});
 
-        var x = new HalfGaugeMeter("gauge1", {appendText: "%"});
-        var y = new HalfGaugeMeter("gauge2", {appendText: "%"});
-        var z = new HalfGaugeMeter("gauge3", {appendText: "%"});
-        var a = new HalfGaugeMeter("gauge4", {appendText: "%"});
-        var b = new FullGaugeMeter("circle", {appendText: "%"});
+    x.render();
+    y.render();
+    z.render();
+    a.render();
+    b.render();
 
-        x.render(); y.render(); z.render(); a.render();
-        b.render();
+    x.disable();
+    y.disable();
+    z.disable();
+    a.disable();
+    b.disable();
 
-        x.disable(); y.disable(); z.disable(); a.disable(); b.disable();
+    console.log(b);
 
-        console.log(b);
-
-        setInterval(function () {
-            x.set(100 * Math.random());
-            y.set(100 * Math.random());
-            z.set(100 * Math.random());
-            a.set(100 * Math.random());
-            b.set(100 * Math.random());
-        }, 2500);
+    setInterval(function () {
+      x.set(100 * Math.random());
+      y.set(100 * Math.random());
+      z.set(100 * Math.random());
+      a.set(100 * Math.random());
+      b.set(100 * Math.random());
+    }, 2500);
 
 
-        /*
-         var n = 0;
-         setInterval(function() {
-         n++;
-         x.startAngle = Math.PI * (n / 1000);
-         x.render();
-         console.log(n);
-         }, 12)
-         */
-    </script>
+    /*
+     var n = 0;
+     setInterval(function() {
+     n++;
+     x.startAngle = Math.PI * (n / 1000);
+     x.render();
+     console.log(n);
+     }, 12)
+     */
+  </script>
 </body>
 </html>
