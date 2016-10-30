@@ -7,6 +7,10 @@ canvas {
     width: 97%;
 }
 
+.mdl-card--border {
+    border-top: 1px solid rgba(0, 0, 0, .1);
+}
+
 .mdl-textfield--small {
     width: 25px;
 }
